@@ -159,7 +159,9 @@ const Home = ({ onSectionChange }: HomeProps) => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground leading-relaxed">
-              University Institute of Technology, Shivpuri, is a constituent college of Rajiv Gandhi Proudyogiki Vishwavidyalaya (RGPV), Bhopal, the University of Technology of Madhya Pradesh. Established by the Government of Madhya Pradesh, the institute is dedicated to providing quality technical education and fostering a research-oriented environment. Our goal is to produce skilled engineers and leaders who can contribute to the technological and social development of the nation.
+            As per the directives of Government of Madhya Pradesh, University Institute of Technology, Shivpuri, a constituent institute of Rajiv Gandhi Proudyogiki Vishwavidyalaya, Bhopal is established in 2020. The institution presently offers undergraduate programmes in Civil Engineering, Computer Science Engineering, Electrical and Electronics Engineering and Mechanical Engineering with an intake of 60 students each.
+
+            Our main thrust areas are to enhance opportunities for research in areas of high relevance to nations science and technology capabilities. Promote use of IT in technical education through promotion of e-Learning and web enabled teaching processes. Transforming the institute into a knowledge enterprise through its focus on research and development, industrial consultancy and by establishing efficient and effective mechanisms for managing innovations.
             </p>
           </CardContent>
         </Card>
