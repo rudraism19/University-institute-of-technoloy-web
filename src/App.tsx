@@ -18,7 +18,7 @@ const Department = lazy(() => import("./pages/Department"));
 const Academic = lazy(() => import("./pages/Academic"));
 const QuickLink = lazy(() => import("./pages/QuickLink"));
 const ContactUs = lazy(() => import("./pages/ContactUs"));
-const Nptel = lazy(() => import("./pages/Nptel"));
+const Events = lazy(() => import("./pages/Events"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 
 const queryClient = new QueryClient();
@@ -58,7 +58,7 @@ const App = () => {
       case 'academic': return <Academic />;
       case 'quick-link': return <QuickLink />;
       case 'contact-us': return <ContactUs />;
-      case 'nptel': return <Nptel />;
+      case 'events': return <Events />;
       case 'gallery': return <Gallery />;
       default: return <Home onSectionChange={handleSectionChange} />;
     }

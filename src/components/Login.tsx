@@ -54,9 +54,10 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
 
       if (error) throw error;
 
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during Google sign in');
-      toast.error(err.message || 'An error occurred during Google sign in');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'An error occurred during Google sign in';
+      setError(message);
+      toast.error(message);
       setLoading(false);
     }
   };
@@ -92,8 +93,9 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
         onLoginSuccess();
         setShowAuthForm(false);
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'An error occurred';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -232,7 +234,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
                   >
                     {isSignUp 
                       ? 'Already have an account? Log in' 
-                      : "Don\'t have an account? Sign up"
+                      : "Don't have an account? Sign up"
                     }
                   </Button>
                   <Button
@@ -252,7 +254,7 @@ const Login = ({ onLoginSuccess }: LoginProps) => {
             <CardHeader className="text-center">
               <CardTitle className="text-2xl text-primary">Check your email</CardTitle>
               <CardDescription>
-                We\'ve sent a verification link to your email address. Please click the link to complete your registration.
+                We've sent a verification link to your email address.
               </CardDescription>
             </CardHeader>
             <CardFooter>

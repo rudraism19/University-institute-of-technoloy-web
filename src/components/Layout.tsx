@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, LogOut, User as UserIcon, Sparkles, Home, Calendar as CalendarIcon, Users, CheckSquare, Target, Image as ImageIcon, Rss, Briefcase, Building2, GraduationCap, Link, Phone, BookOpen, ChevronDown } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { User } from '@supabase/supabase-js';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +18,7 @@ interface LayoutProps {
   children: React.ReactNode;
   currentSection: string;
   onSectionChange: (section: string) => void;
-  user: any; // Simplified user object for now
+  user: User | undefined;
   bannerTitle?: string;
   bannerDetails?: string;
 }
@@ -39,7 +40,7 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
     { id: 'quick-link', label: 'Quick Link', icon: Link },
     { id: 'contact-us', label: 'Contact Us', icon: Phone },
-    { id: 'nptel', label: 'NPTEL', icon: BookOpen },
+    { id: 'events', label: 'Events', icon: CalendarIcon },
   ];
 
   const handleLogout = async () => {
@@ -74,7 +75,7 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
       <div className="flex-grow">
         {/* Top Banner (optional) */}
         {(bannerTitle || bannerDetails) && (
-          <div ref={bannerRef} className="fixed top-0 w-full bg-background/95 text-foreground backdrop-blur-md border-b border-border z-50">
+          <div ref={bannerRef} className="fixed top-0 w-full glass-nav text-foreground z-50">
             <div className="container mx-auto px-4 py-3 flex flex-col items-center justify-center">
               <div className="max-w-4xl px-2">
                 {bannerTitle && <div className="text-center font-extrabold text-lg md:text-2xl lg:text-3xl">{bannerTitle}</div>}
@@ -87,7 +88,7 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
         {/* Navigation */}
         <nav
           style={isMobile ? { top: hasBanner ? bannerHeight : 48 } : {}}
-          className={`fixed w-full bg-beige text-gray-800 backdrop-blur-md border-b border-border/20 shadow-sm shadow-black/6 z-40 animate-in fade-in slide-in-from-top-4 duration-500 ${!isMobile && (hasBanner ? 'top-20' : 'top-12')}`}
+          className={`fixed w-full glass-nav text-gray-800 z-40 animate-in fade-in slide-in-from-top-4 duration-500 ${!isMobile && (hasBanner ? 'top-20' : 'top-12')}`}
         >
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center py-4">
@@ -249,7 +250,10 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
           style={isMobile ? { top: bannerHeight } : {}}
           className={`fixed left-0 w-full h-1 bg-muted z-30 ${!isMobile && (hasBanner ? 'top-20' : 'top-12')}`}
         >
-          <div className="h-full bg-primary transition-all duration-300 ease-out" style={{ width: `${scrollProgress}%` }} />
+          <div 
+            className="h-full bg-primary transition-transform duration-300 ease-out origin-left" 
+            style={{ transform: `scaleX(${scrollProgress / 100})` }} 
+          />
         </div>
       </div>
       <Footer />

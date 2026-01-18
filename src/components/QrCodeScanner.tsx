@@ -11,7 +11,14 @@ const QrCodeScanner: React.FC<QrCodeScannerProps> = ({ onScanSuccess }) => {
       'qr-reader',
       {
         fps: 10,
-        qrbox: { width: 250, height: 250 },
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+            const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+            const qrboxSize = Math.floor(minEdge * 0.8);
+            return {
+                width: qrboxSize,
+                height: qrboxSize,
+            };
+        },
         supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
       },
       /* verbose= */ false

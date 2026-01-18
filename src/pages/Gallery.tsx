@@ -23,6 +23,8 @@ const Gallery = () => {
                 src={image}
                 alt={`Gallery Image ${index + 1}`}
                 className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </CardContent>
           </Card>

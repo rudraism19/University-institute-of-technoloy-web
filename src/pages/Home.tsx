@@ -168,7 +168,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
         </Card>
 
         <div className="grid md:grid-cols-3 gap-8 text-center">
-          <Card className="shadow-md hover:shadow-xl transition-shadow">
+          <Card className="glass-card">
             <CardHeader>
               <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center">
                 <Building className="h-8 w-8 text-primary" />
@@ -179,7 +179,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
               <p className="text-muted-foreground">Modern labs, spacious classrooms, and a well-stocked library to support academic excellence.</p>
             </CardContent>
           </Card>
-          <Card className="shadow-md hover:shadow-xl transition-shadow">
+          <Card className="glass-card">
             <CardHeader>
               <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center">
                 <GraduationCap className="h-8 w-8 text-primary" />
@@ -190,7 +190,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
               <p className="text-muted-foreground">A team of highly qualified and dedicated faculty members to guide and mentor students.</p>
             </CardContent>
           </Card>
-          <Card className="shadow-md hover:shadow-xl transition-shadow">
+          <Card className="glass-card">
             <CardHeader>
               <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center">
                 <Users className="h-8 w-8 text-primary" />
@@ -219,6 +219,12 @@ const Home = ({ onSectionChange }: HomeProps) => {
               className="group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg border-border/50 hover:border-primary/50 animate-in fade-in zoom-in-95"
               style={{ animationDelay: `${100 + index * 100}ms`, animationFillMode: 'backwards' }}
               onClick={() => onSectionChange(feature.section)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onSectionChange(feature.section);
+                }
+              }}
+              tabIndex={0}
             >
               <CardHeader className="text-center pb-4">
                 <div className={`w-16 h-16 mx-auto rounded-full bg-muted flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
@@ -287,7 +293,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
                 {/* <p>Somya Sharma</p> */}
             </CardContent>
           </Card>
-          <Card className="md:col-span-2">
+          <Card className="lg:col-span-2">
             <CardHeader>
                 <CardTitle>Our Philosophy</CardTitle>
             </CardHeader>
