@@ -15,9 +15,9 @@ const Gallery = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">Our Gallery</h1>
-      <div className="grid grid-cols-1 justify-items-center gap-6">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         {galleryImages.map((image, index) => (
-          <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow max-w-5xl w-full">
+          <Card key={index} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow w-full break-inside-avoid">
             <CardContent className="p-0">
               <img
                 src={image}

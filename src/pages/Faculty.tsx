@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 
 const facultyMembers = [
   // Regular Faculty
@@ -222,8 +225,17 @@ const facultyMembers = [
 ];
 
 const Faculty = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter faculty based on search term
+  const filteredFaculty = facultyMembers.filter(member =>
+    member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    member.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    member.designation.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   // Group faculty by department
-  const groupedFaculty = facultyMembers.reduce((acc, member) => {
+  const groupedFaculty = filteredFaculty.reduce((acc, member) => {
     const dept = member.department || 'Other';
     if (!acc[dept]) {
       acc[dept] = [];
@@ -241,36 +253,61 @@ const Faculty = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-extrabold text-center mb-12 text-primary">Our Faculty</h1>
-      
-      {sortedDepartments.map((dept) => (
-        <div key={dept} className="mb-16">
-          <h2 className="text-2xl font-bold mb-6 pb-2 border-b border-gray-200 text-gray-800">{dept}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {groupedFaculty[dept].map((member, index) => (
-              <Card key={index} className="text-center shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
-                <CardHeader>
-                  <div className="relative w-32 h-32 mx-auto">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover rounded-full shadow-md"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(member.name);
-                      }}
-                    />
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-grow flex flex-col justify-center">
-                  <CardTitle className="text-lg font-semibold mb-1">{member.name}</CardTitle>
-                  <p className="text-sm font-medium text-primary mb-1">{member.designation}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-extrabold text-primary mb-4">Our Faculty</h1>
+        <p className="text-lg text-muted-foreground mb-8">Meet the dedicated team behind our academic excellence.</p>
+
+        <div className="max-w-md mx-auto relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            placeholder="Search by name, department, or designation..."
+            className="pl-10"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
-      ))}
+      </div>
+
+      {sortedDepartments.length === 0 ? (
+        <div className="text-center py-12 text-muted-foreground">
+          No faculty members found matching "{searchTerm}".
+        </div>
+      ) : (
+        sortedDepartments.map((dept) => (
+          <div key={dept} className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h2 className="text-2xl font-bold mb-6 pb-2 border-b border-border text-foreground flex items-center gap-2">
+              <span className="w-2 h-8 bg-primary rounded-full inline-block"></span>
+              {dept}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {groupedFaculty[dept].map((member, index) => (
+                <Card key={index} className="text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full group">
+                  <CardHeader>
+                    <div className="relative w-32 h-32 mx-auto overflow-hidden rounded-full ring-4 ring-primary/10 group-hover:ring-primary/30 transition-all">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(member.name);
+                        }}
+                      />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow flex flex-col justify-center space-y-2">
+                    <CardTitle className="text-lg font-semibold">{member.name}</CardTitle>
+                    <p className="text-sm font-medium text-primary">{member.designation}</p>
+                    <span className="text-xs text-muted-foreground py-1 px-3 bg-muted rounded-full mx-auto">
+                      {member.department}
+                    </span>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 };

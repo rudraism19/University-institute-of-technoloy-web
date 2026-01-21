@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // Components
 import Layout from "./components/Layout";
@@ -16,10 +17,12 @@ const UserInfo = lazy(() => import("./pages/UserInfo"));
 const Faculty = lazy(() => import("./pages/Faculty"));
 const Department = lazy(() => import("./pages/Department"));
 const Academic = lazy(() => import("./pages/Academic"));
-const QuickLink = lazy(() => import("./pages/QuickLink"));
-const ContactUs = lazy(() => import("./pages/ContactUs"));
+
 const Events = lazy(() => import("./pages/Events"));
 const Gallery = lazy(() => import("./pages/Gallery"));
+const Placement = lazy(() => import("./pages/Placement"));
+const Clubs = lazy(() => import("./pages/Clubs"));
+const Resources = lazy(() => import("./pages/Resources"));
 
 const queryClient = new QueryClient();
 
@@ -56,10 +59,12 @@ const App = () => {
       case 'faculty': return <Faculty />;
       case 'department': return <Department />;
       case 'academic': return <Academic />;
-      case 'quick-link': return <QuickLink />;
-      case 'contact-us': return <ContactUs />;
-      case 'events': return <Events />;
+
+      case 'events': return <Events user={session?.user} />;
       case 'gallery': return <Gallery />;
+      case 'placement': return <Placement />;
+      case 'clubs': return <Clubs />;
+      case 'resources': return <Resources />;
       default: return <Home onSectionChange={handleSectionChange} />;
     }
   };
@@ -85,25 +90,27 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        
-        <Layout 
-          user={session?.user}
-          currentSection={currentSection} 
-          onSectionChange={handleSectionChange}
-          bannerTitle={bannerForSection?.title}
-          bannerDetails={bannerForSection?.details}
-        >
-          <Suspense fallback={<div>Loading...</div>}>
-            {renderCurrentSection()}
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+
+          <Layout
+            user={session?.user}
+            currentSection={currentSection}
+            onSectionChange={handleSectionChange}
+            bannerTitle={bannerForSection?.title}
+            bannerDetails={bannerForSection?.details}
+          >
+            <Suspense fallback={<div>Loading...</div>}>
+              {renderCurrentSection()}
+            </Suspense>
+          </Layout>
+          <Suspense fallback={null}>
+            <Chatbot />
           </Suspense>
-        </Layout>
-        <Suspense fallback={null}>
-          <Chatbot />
-        </Suspense>
-      </TooltipProvider>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
