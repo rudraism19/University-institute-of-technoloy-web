@@ -326,10 +326,10 @@ const Home = ({ onSectionChange }: HomeProps) => {
                 <CardTitle>Meet the Developers</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p>Hacker Kushwah</p>
-                <p>Bhullar</p>
+                {/* <p>Hacker Kushwah</p> */}
+                <p>Rudra Bhullar</p>
                 {/* <p>Rishabh Dwivedi</p> */}
-                <p>Coder Hima</p>
+                {/* <p>Coder Hima</p> */}
                 {/* <p>Vanshika Rathi</p> */}
                 {/* <p>Somya Sharma</p> */}
               </CardContent>
