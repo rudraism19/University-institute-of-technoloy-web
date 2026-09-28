@@ -73,7 +73,7 @@ export const SEOHead = ({ section }: SEOHeadProps) => {
 
     // Update Canonical URL
     const canonicalTag = document.querySelector('link[rel="canonical"]');
-    const targetUrl = section === 'home' ? 'https://uitshivpuri.rgpv.ac.in/' : `https://uitshivpuri.rgpv.ac.in/#${section}`;
+    const targetUrl = section === 'home' ? 'https://uit-rgpv-web-isqm.vercel.app/' : `https://uit-rgpv-web-isqm.vercel.app/#${section}`;
     if (canonicalTag) {
       canonicalTag.setAttribute('href', targetUrl);
     }

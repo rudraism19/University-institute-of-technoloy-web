@@ -20,4 +20,4 @@ User-agent: *
 Allow: /
 
 # Sitemap Location
-Sitemap: https://uitshivpuri.rgpv.ac.in/sitemap.xml
+Sitemap: https://uit-rgpv-web-isqm.vercel.app/sitemap.xml

@@ -6,7 +6,7 @@
 
   <!-- Home Page -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -14,7 +14,7 @@
 
   <!-- Academics & Admissions -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#academic</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#academic</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -22,7 +22,7 @@
 
   <!-- Departments & Courses -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#department</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#department</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
   <!-- Training & Placements -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#placement</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#placement</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -38,7 +38,7 @@
 
   <!-- Faculty Members -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#faculty</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#faculty</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -46,7 +46,7 @@
 
   <!-- Events & Festivities -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#events</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#events</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -54,7 +54,7 @@
 
   <!-- Photo Gallery -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#gallery</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#gallery</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -62,7 +62,7 @@
 
   <!-- Student Clubs -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#clubs</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#clubs</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -70,7 +70,7 @@
 
   <!-- Student Resources -->
   <url>
-    <loc>https://uitshivpuri.rgpv.ac.in/#resources</loc>
+    <loc>https://uit-rgpv-web-isqm.vercel.app/#resources</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
