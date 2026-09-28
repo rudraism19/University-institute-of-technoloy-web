@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, LogOut, User as UserIcon, Sparkles, Home, Calendar as CalendarIcon, Users, CheckSquare, Target, Image as ImageIcon, Rss, Briefcase, Building2, GraduationCap, Link, Phone, BookOpen, ChevronDown, TrendingUp } from 'lucide-react';
+import { Menu, LogOut, User as UserIcon, Home, Calendar as CalendarIcon, Users, Image as ImageIcon, Briefcase, Building2, GraduationCap, ChevronDown, TrendingUp, BookOpen } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { User } from '@supabase/supabase-js';
 import {
@@ -12,7 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { useIsMobile } from '@/hooks/use-mobile'; // Import the hook
+import Footer from './Footer';
+import { InfiniteTextCarousel } from './InfiniteTextCarousel';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -23,16 +24,9 @@ interface LayoutProps {
   bannerDetails?: string;
 }
 
-
-import Footer from './Footer';
-import { InfiniteTextCarousel } from './InfiniteTextCarousel';
-import Chatbot from './Chatbot';
-
-
 const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, bannerDetails }: LayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const isMobile = useIsMobile(); // Use the hook
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -43,21 +37,33 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
     { id: 'gallery', label: 'Gallery', icon: ImageIcon },
     { id: 'events', label: 'Events', icon: CalendarIcon },
     { id: 'clubs', label: 'Clubs', icon: Users },
+    { id: 'resources', label: 'Resources', icon: BookOpen },
   ];
-
-  /* Removed headerHeight state logic as we are switching to Sticky Nav */
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
 
-  const handleScroll = () => {
-    const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    setScrollProgress((window.scrollY / totalHeight) * 100);
-  };
-
+  // High performance scroll progress using requestAnimationFrame and direct DOM transform
+  // Avoids triggering React component re-renders on every scroll tick (prevents INP degradation & jank)
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          if (totalHeight > 0 && progressBarRef.current) {
+            const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+            progressBarRef.current.style.transform = `scaleX(${progress})`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -68,35 +74,50 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
 
   return (
     <div className="min-h-screen bg-beige flex flex-col">
-      {/* 1. Infinite Text Carousel (Static - Scrolls away) */}
+      {/* 1. Infinite Text Carousel */}
       <InfiniteTextCarousel />
 
-      {/* 2. Top Banner (Static - Scrolls away) */}
+      {/* 2. Top Banner Header */}
       {(bannerTitle || bannerDetails) && (
-        <div className="w-full glass-nav text-foreground border-b border-white/20 z-50">
+        <header className="w-full glass-nav text-foreground border-b border-white/20 z-50">
           <div className="container mx-auto px-4 py-2 flex flex-col items-center justify-center">
             <div className="max-w-4xl px-2">
-              {bannerTitle && <div className="text-center font-bold text-sm md:text-xl lg:text-2xl tracking-tight">{bannerTitle}</div>}
-              {bannerDetails && <div className="mt-0.5 text-center text-[10px] md:text-sm text-muted-foreground">{bannerDetails}</div>}
+              {bannerTitle && <h2 className="text-center font-bold text-sm md:text-xl lg:text-2xl tracking-tight">{bannerTitle}</h2>}
+              {bannerDetails && <p className="mt-0.5 text-center text-[10px] md:text-sm text-muted-foreground">{bannerDetails}</p>}
             </div>
           </div>
-        </div>
+        </header>
       )}
 
-      {/* 3. Navigation (Sticky - Stays at top) */}
-      <nav className="w-full glass-nav text-gray-800 z-40 sticky top-0 transition-all duration-300">
+      {/* 3. Navigation Bar (Sticky) */}
+      <nav aria-label="Main Navigation" className="w-full glass-nav text-gray-800 z-40 sticky top-0 transition-all duration-300">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-2">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110">
-                <img src="/rgpv-logo.webp" alt="FestHub Logo" className="w-full h-full object-cover rounded-full" />
+            <a
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                onSectionChange('home');
+              }}
+              className="flex items-center gap-3 cursor-pointer group"
+              aria-label="UIT RGPV Shivpuri Home"
+            >
+              <div className="w-10 h-10 rounded-full flex items-center justify-center transition-transform group-hover:scale-110">
+                <img
+                  src="/rgpv-logo.webp"
+                  alt="UIT RGPV Shivpuri Official Crest"
+                  width={40}
+                  height={40}
+                  loading="eager"
+                  className="w-full h-full object-cover rounded-full"
+                />
               </div>
               <span className="text-2xl font-bold text-primary">UIT RGPV</span>
-            </div>
+            </a>
 
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex items-center gap-2">
+            <ul className="hidden md:flex items-center gap-1 lg:gap-2">
               {navItems.slice(0, 8).map((item, index) => (
                 <li key={item.id} className="animate-in fade-in slide-in-from-top-2" style={{ animationDelay: `${100 + index * 100}ms` }}>
                   <Button
@@ -114,7 +135,7 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
-                        variant="ghost"
+                        variant={navItems.slice(8).some(i => i.id === currentSection) ? "default" : "ghost"}
                         className="font-medium transition-transform hover:scale-105"
                       >
                         More
@@ -138,7 +159,7 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
               {user && (
                 <DropdownMenu modal={false}>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-10 w-10 rounded-full transition-transform hover:scale-110">
+                    <Button variant="ghost" className="relative h-10 w-10 rounded-full transition-transform hover:scale-110" aria-label="User Account Menu">
                       <Avatar className="h-10 w-10">
                         <AvatarFallback>
                           {user.email ? user.email.charAt(0).toUpperCase() : <UserIcon />}
@@ -176,13 +197,14 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
                 size="icon"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="transition-transform hover:scale-110"
+                aria-label="Toggle navigation menu"
               >
                 <Menu className="h-5 w-5" />
               </Button>
             </div>
           </div>
 
-          {/* Mobile Navigation - Scrollable with max-height */}
+          {/* Mobile Navigation */}
           {mobileMenuOpen && (
             <div className="md:hidden pb-4 animate-in slide-in-from-top-4 duration-300 bg-beige text-gray-800 border-t border-gray-200 max-h-[80vh] overflow-y-auto shadow-inner">
               <div className="flex flex-col gap-2 px-4 py-2">
@@ -232,25 +254,26 @@ const Layout = ({ children, currentSection, onSectionChange, user, bannerTitle, 
           )}
         </div>
 
-        {/* Scroll Progress Indicator - Attached to bottom of Sticky Nav */}
-        <div className="w-full h-1 bg-muted relative">
+        {/* Scroll Progress Indicator - GPU hardware accelerated scaleX */}
+        <div className="w-full h-1 bg-muted relative overflow-hidden" aria-hidden="true">
           <div
-            className="h-full bg-primary transition-transform duration-300 ease-out origin-left absolute top-0 left-0 w-full"
-            style={{ transform: `scaleX(${scrollProgress / 100})` }}
+            ref={progressBarRef}
+            className="h-full bg-primary origin-left absolute top-0 left-0 w-full will-change-transform"
+            style={{ transform: 'scaleX(0)' }}
           />
         </div>
       </nav>
 
-      {/* Main Content - No extra padding needed as header is not fixed over it (except sticky nav which is in flow) */}
+      {/* Main Content Area */}
       <div className="flex-grow">
         <main className="transition-all duration-300">
           {children}
         </main>
       </div>
 
-      <Footer />
-      <Chatbot />
+      <Footer onSectionChange={onSectionChange} />
     </div>
   );
 };
+
 export default Layout;

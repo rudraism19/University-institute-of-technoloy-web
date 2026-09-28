@@ -3,20 +3,24 @@ import { Mic, MicOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
+// Browser SpeechRecognition interface compatibility
+type SpeechRecognitionType = any;
+
 interface VoiceNavigatorProps {
     onSectionChange: (section: string) => void;
 }
 
 const VoiceNavigator = ({ onSectionChange }: VoiceNavigatorProps) => {
     const [isListening, setIsListening] = useState(false);
-    const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+    const [recognition, setRecognition] = useState<SpeechRecognitionType | null>(null);
     const [isSupported, setIsSupported] = useState(true);
 
     useEffect(() => {
         // Check for browser support
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognitionInstance = new SpeechRecognition();
+        const win = window as any;
+        if ('webkitSpeechRecognition' in win || 'SpeechRecognition' in win) {
+            const SpeechRecognitionClass = win.SpeechRecognition || win.webkitSpeechRecognition;
+            const recognitionInstance = new SpeechRecognitionClass();
 
             recognitionInstance.continuous = false;
             recognitionInstance.lang = 'en-US';
@@ -31,14 +35,14 @@ const VoiceNavigator = ({ onSectionChange }: VoiceNavigatorProps) => {
                 setIsListening(false);
             };
 
-            recognitionInstance.onresult = (event: SpeechRecognitionEvent) => {
+            recognitionInstance.onresult = (event: any) => {
                 const transcript = event.results[0][0].transcript.toLowerCase();
                 console.log("Voice Command:", transcript);
                 toast.success(`You said: "${transcript}"`);
                 handleCommand(transcript);
             };
 
-            recognitionInstance.onerror = (event: SpeechRecognitionErrorEvent) => {
+            recognitionInstance.onerror = (event: any) => {
                 console.error("Speech recognition error", event.error);
                 setIsListening(false);
                 if (event.error === 'not-allowed') {

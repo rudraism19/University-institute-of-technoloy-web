@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hi! I'm FestHub AI. Ask me about UIT RGPV, events, or faculty!", sender: 'bot' }
+    { text: "Hi! I'm UIT RGPV AI Assistant. Ask me about departments, admissions, faculty, or campus life!", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +74,7 @@ const Chatbot = () => {
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-base font-bold">FestHub AI</CardTitle>
+                <CardTitle className="text-base font-bold">UIT AI Assistant</CardTitle>
                 <div className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                   <span className="text-xs text-white/80 font-medium">Online</span>

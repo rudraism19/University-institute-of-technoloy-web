@@ -1,5 +1,11 @@
+# UIT RGPV Shivpuri Robots.txt
 User-agent: Googlebot
 Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /gallery/
+Allow: /rgpv-logo.webp
 
 User-agent: Bingbot
 Allow: /
@@ -12,3 +18,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap Location
+Sitemap: https://uitshivpuri.rgpv.ac.in/sitemap.xml

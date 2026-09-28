@@ -286,7 +286,11 @@ const Faculty = () => {
                     <div className="relative w-32 h-32 mx-auto overflow-hidden rounded-full ring-4 ring-primary/10 group-hover:ring-primary/30 transition-all">
                       <img
                         src={member.image}
-                        alt={member.name}
+                        alt={`${member.name} - ${member.designation}, UIT RGPV Shivpuri`}
+                        width={128}
+                        height={128}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-transform group-hover:scale-110 duration-500"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;

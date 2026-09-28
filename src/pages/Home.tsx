@@ -52,8 +52,12 @@ const Home = ({ onSectionChange }: HomeProps) => {
           <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center shadow-lg">
             <img
               src="/rgpv-logo.webp"
-              alt="College Logo"
-              loading="lazy" decoding="async"
+              alt="UIT RGPV Shivpuri Official Emblem"
+              width={96}
+              height={96}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
@@ -91,6 +95,8 @@ const Home = ({ onSectionChange }: HomeProps) => {
               key={index}
               src={icon.src}
               alt={icon.alt}
+              width={48}
+              height={48}
               loading="lazy" decoding="async"
               className="w-12 h-12 transition-transform hover:scale-110 animate-in fade-in zoom-in"
               style={{ animationDelay: `${200 + index * 50}ms`, animationFillMode: 'backwards' }}
@@ -127,7 +133,11 @@ const Home = ({ onSectionChange }: HomeProps) => {
                 <div className="flex-shrink-0">
                   <img
                     src="/director.webp"
-                    alt="Director"
+                    alt="Dr. S. K. Dhakad - Director, UIT RGPV Shivpuri"
+                    width={192}
+                    height={192}
+                    loading="lazy"
+                    decoding="async"
                     className="w-48 h-48 object-cover rounded-lg shadow-md"
                   />
                 </div>
@@ -195,7 +205,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
 
       {/* Aims Content */}
       <div className="py-12">
-        <h1 className="text-4xl font-extrabold text-center mb-12 text-primary">About UIT RGPV Shivpuri</h1>
+        <h2 className="text-4xl font-extrabold text-center mb-12 text-primary">About UIT RGPV Shivpuri</h2>
 
         <Card className="mb-12 shadow-lg">
           <CardHeader>
@@ -286,7 +296,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
       {/* About Developers */}
       <div className="mt-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">👨‍💻 About Developers</h1>
+          <h2 className="text-4xl font-bold text-foreground mb-4">👨‍💻 About Developers</h2>
           <p className="text-lg text-muted-foreground">
             Team CodeFusion
           </p>
@@ -297,7 +307,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
             <CardHeader>
               <CardTitle className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden">
-                  <img src="/public/team.jpg" alt="Team CodeFusion Logo" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                  <img src="/team.jpg" alt="Team CodeFusion Logo" width={48} height={48} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <Heart className="w-5 h-5 text-red-500" />
                 Team CodeFusion
@@ -363,7 +373,7 @@ const Home = ({ onSectionChange }: HomeProps) => {
             <CardHeader>
               <CardTitle>📞 Contact Information</CardTitle>
               <CardDescription>
-                Get in touch with us for support, collaborations, or feedback about the FestHub platform.
+                Get in touch with us for support, collaborations, or feedback about UIT RGPV Shivpuri.
               </CardDescription>
             </CardHeader>
             <CardContent>
